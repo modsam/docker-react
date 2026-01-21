@@ -13,11 +13,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build Docker image
-      run: docker build -f Dockerfile -t frontend:latest .
+    - name: Build Docker image for testing
+      run: docker build -f Dockerfile.dev -t frontend:test .
 
     - name: Run tests in Docker
-      run: docker run --rm frontend:latest npm test -- --watchAll=false --passWithNoTests
+      run: docker run --rm frontend:test npm test -- --watchAll=false --passWithNoTests
 
-    - name: Build in Docker
-      run: docker run --rm frontend:latest npm run build
+    - name: Build production Docker image
+      run: docker build -f Dockerfile -t frontend:latest .
